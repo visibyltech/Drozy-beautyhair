@@ -1,4 +1,11 @@
 import { Product, SaveToBuyPlan, Order, UserProfile, SystemNotification } from '../types';
+import boneStraightImage from '../assets/images/luxury_bone_straight_hair_1793692289793.jpg';
+import mannequinBobImage from '../assets/images/mannequin_bob_wig_1793693688506.jpg';
+import mannequinCurlyImage from '../assets/images/mannequin_curly_wig_1793693687407.jpg';
+import mannequinDeepWaveImage from '../assets/images/mannequin_deep_wave_wig_1793693688836.jpg';
+import mannequinBodyWaveImage from '../assets/images/mannequin_body_wave_wig_1793693688371.jpg';
+import bodyWaveLaceImage from '../assets/images/luxury_body_wave_lace_1793692291141.jpg';
+import hairCareElixirImage from '../assets/images/luxury_hair_care_elixir_1793692291109.jpg';
 
 export const OFFICIAL_LOGO_URL = '/assets/aistudio/IMG-20261103-WA0000_78aa170f.jpg';
 export const WHATSAPP_CONTACT = '+234 706 172 8749';
@@ -12,8 +19,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     subtitle: '100% Raw Virgin Vietnamese Hair · Piano Gloss Mirror Finish',
     basePrice: 380000,
     images: [
-      '/src/assets/images/luxury_bone_straight_hair_1793692289793.jpg',
-      '/src/assets/images/mannequin_bob_wig_1793693688506.jpg',
+      boneStraightImage,
+      mannequinBobImage,
     ],
     description: 'Our crown jewel. 100% Vietnamese raw virgin hair, processed to absolute bone straight perfection. Super double drawn from roots to ends for maximum fullness, with an undetectable HD Swiss lace frontal on a professional display head.',
     origin: 'Vietnamese Raw Hair',
@@ -37,8 +44,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     subtitle: 'Juicy Defined Spirals · 100% Cuticle Aligned Human Hair',
     basePrice: 320000,
     images: [
-      '/src/assets/images/mannequin_curly_wig_1793693687407.jpg',
-      '/src/assets/images/mannequin_deep_wave_wig_1793693688836.jpg',
+      mannequinCurlyImage,
+      mannequinDeepWaveImage,
     ],
     description: 'Experience unmatched hydration and coil retention. Sourced ethically from Cambodia, these curls remain luscious, bounce back after washing, and withstand gentle heat styling. Built on breathable luxury cap on a salon mannequin stand.',
     origin: 'Cambodian Raw Hair',
@@ -62,8 +69,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     subtitle: 'Ultra Gloss Luster · Pre-Plucked Natural Hairline',
     basePrice: 365000,
     images: [
-      '/src/assets/images/mannequin_body_wave_wig_1793693688371.jpg',
-      '/src/assets/images/luxury_body_wave_lace_1793692291141.jpg',
+      mannequinBodyWaveImage,
+      bodyWaveLaceImage,
     ],
     description: 'Cascading Hollywood waves that make an entrance. Crafted from single-donor raw hair, this unit maintains its bounce through tropical humidity and multiple washes. Styled on an atelier mannequin display.',
     origin: 'Vietnamese Double Drawn',
@@ -87,8 +94,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     subtitle: 'Razor-Sharp Precision Cut · 100% Bleached Raw Virgin Hair',
     basePrice: 295000,
     images: [
-      '/src/assets/images/mannequin_bob_wig_1793693688506.jpg',
-      '/src/assets/images/luxury_bone_straight_hair_1793692289793.jpg',
+      mannequinBobImage,
+      boneStraightImage,
     ],
     description: 'Chic, immaculate, and showstopping. High-grade 613 raw Vietnamese hair dyed to pure platinum blonde with zero yellow undertones. Features an undetectable HD lace frontal on a matte mannequin head.',
     origin: 'Vietnamese Raw Hair',
@@ -112,8 +119,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     subtitle: 'Ready-to-Wear Elastic Security Band · 2-Minute Install',
     basePrice: 345000,
     images: [
-      '/src/assets/images/mannequin_deep_wave_wig_1793693688836.jpg',
-      '/src/assets/images/mannequin_curly_wig_1793693687407.jpg',
+      mannequinDeepWaveImage,
+      mannequinCurlyImage,
     ],
     description: 'No glue, no mess, no salon wait time. Pre-plucked with natural micro baby hairs, pre-cut zigzag hairline, and an adjustable 3D piano elastic band. Displayed on a modern wood-and-gold mannequin stand.',
     origin: 'Peruvian Raw Hair',
@@ -137,8 +144,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     subtitle: '3 Full Bundles + Pre-Bleached 13x6 HD Frontal Deal',
     basePrice: 285000,
     images: [
-      '/src/assets/images/luxury_body_wave_lace_1793692291141.jpg',
-      '/src/assets/images/mannequin_body_wave_wig_1793693688371.jpg',
+      bodyWaveLaceImage,
+      mannequinBodyWaveImage,
     ],
     description: 'Effortless goddess waves with unmatched movement and silky texture. 3 full 100-gram bundles paired with our ultra-thin HD lace frontal. Bleaches cleanly to 613 blonde, holds curls for days, and does not tangle or shed.',
     origin: 'Brazilian Virgin Hair',
@@ -162,8 +169,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     subtitle: 'Cold-Pressed Argan & Rosehip Formula + Anti-Breakage Brush',
     basePrice: 58000,
     images: [
-      '/src/assets/images/luxury_hair_care_elixir_1793692291109.jpg',
-      '/src/assets/images/luxury_body_wave_lace_1793692291141.jpg',
+      hairCareElixirImage,
+      bodyWaveLaceImage,
     ],
     description: 'The ultimate royal hair maintenance duo. Our 100ml botanical elixir infuses raw cuticles with lightweight moisture, protects against heat up to 450°F, and prevents split ends. Accompanied by our ergonomic rose-gold plated boar-bristle brush.',
     origin: 'D’ROZY Laboratory Formulations',
@@ -187,8 +194,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     subtitle: 'Ultra Thin 0.04mm Swiss Lace · Clean Single Knots',
     basePrice: 145000,
     images: [
-      '/src/assets/images/luxury_body_wave_lace_1793692291141.jpg',
-      '/src/assets/images/luxury_hair_care_elixir_1793692291109.jpg',
+      bodyWaveLaceImage,
+      hairCareElixirImage,
     ],
     description: 'The thinnest lace on the continent. Designed to create an undetected, scalp-like illusion even in direct sunlight or 4K photography. Hand-ventilated single knots along the hairline with gentle transition.',
     origin: 'Swiss Ultra Film Lace',
@@ -212,8 +219,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     subtitle: 'Double Weft Sealed · Can Be Dyed to 613 Lightest Blonde',
     basePrice: 95000,
     images: [
-      '/src/assets/images/luxury_body_wave_lace_1793692291141.jpg',
-      '/src/assets/images/luxury_bone_straight_hair_1793692289793.jpg',
+      bodyWaveLaceImage,
+      boneStraightImage,
     ],
     description: 'Thick from weft to tip. Completely raw, healthy cuticles that flow in the same direction. Lasts 5+ years with proper hydration and care.',
     origin: 'Cambodian Temples',
