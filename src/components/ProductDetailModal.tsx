@@ -10,6 +10,7 @@ import {
   Heart,
   Check,
   ShieldCheck,
+  Building2,
   Truck,
   MessageCircle,
   Scissors,
@@ -161,9 +162,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                 <span className="text-[9px] text-[#9E9AA6]">Lagos & Nationwide</span>
               </div>
               <div className="p-2 rounded-xl bg-[#16161A] border border-[#2C2933]/40">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 mx-auto mb-1" />
-                <span className="text-[10px] text-[#FAF7F2] font-semibold block">Paystack</span>
-                <span className="text-[9px] text-[#9E9AA6]">100% Secured</span>
+                <Building2 className="w-4 h-4 text-emerald-400 mx-auto mb-1" />
+                <span className="text-[10px] text-[#FAF7F2] font-semibold block">Bank Transfer</span>
+                <span className="text-[9px] text-[#9E9AA6]">Secure Checkout</span>
               </div>
             </div>
           </div>
