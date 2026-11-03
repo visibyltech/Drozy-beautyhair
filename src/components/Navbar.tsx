@@ -22,14 +22,14 @@ export const Navbar: React.FC = () => {
   return (
     <header className="sticky top-0 z-40 w-full bg-[#0B0B0C]/95 backdrop-blur-md border-b border-[#2C2933]">
       {/* Top Luxury Announcement Bar */}
-      <div className="bg-gradient-to-r from-[#18171C] via-[#241F23] to-[#18171C] border-b border-[#2C2933]/60 px-3 py-1.5 text-center text-[10px] sm:text-[11px] text-[#FAF7F2] tracking-wide">
+      <div className="bg-gradient-to-r from-[#18171C] via-[#241F23] to-[#18171C] border-b border-[#2C2933]/60 px-3 py-1 text-center text-[9px] sm:text-[11px] text-[#FAF7F2] tracking-wide">
         <span className="text-[#E8A598]">HOME OF LUXURY HAIR</span>
         <span className="mx-2 text-[#9E9AA6]">·</span>
         <span className="text-[#D4AF37]">FLEXIBLE SAVE TO BUY PLANS</span>
       </div>
 
       {/* Main Navigation Bar - Following Strict Top Bar Contract */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-8">
         {/* Zone 1: Brand Wordmark & Official Logo */}
         <div
           onClick={() => setCurrentView('home')}
@@ -38,7 +38,7 @@ export const Navbar: React.FC = () => {
           <img
             src={OFFICIAL_LOGO_URL}
             alt="D’ROZY BEAUTY HAIR Logo"
-            className="w-12 h-12 rounded-full object-cover border border-[#D4AF37]/40 shadow-lg group-hover:border-[#D4AF37] transition-all"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border border-[#D4AF37]/40 shadow-lg group-hover:border-[#D4AF37] transition-all"
             referrerPolicy="no-referrer"
           />
           <div className="flex flex-col">
