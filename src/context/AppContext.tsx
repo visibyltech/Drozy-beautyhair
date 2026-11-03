@@ -153,7 +153,50 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Navigation State
-  const [currentView, setCurrentView] = useState<AppView>('home');
+  const [currentView, setCurrentViewState] = useState<AppView>('home');
+
+  // Browser Back restores the previous storefront view instead of leaving the site.
+  useEffect(() => {
+    if (!window.history.state?.drozyApp) {
+      window.history.replaceState({ drozyApp: true, drozyView: 'home' }, '', window.location.href);
+    }
+    window.history.pushState(
+      { drozyApp: true, drozyRoot: true, drozyView: 'home' },
+      '',
+      window.location.href
+    );
+
+    const handlePopState = (event: PopStateEvent) => {
+      const state = event.state;
+      if (state?.drozyApp && state?.drozyView) {
+        setCurrentViewState(state.drozyView as AppView);
+        if (state.drozyRoot) {
+          window.history.pushState(
+            { drozyApp: true, drozyRoot: true, drozyView: state.drozyView },
+            '',
+            window.location.href
+          );
+        }
+        return;
+      }
+      setCurrentViewState('home');
+      window.history.pushState(
+        { drozyApp: true, drozyRoot: true, drozyView: 'home' },
+        '',
+        window.location.href
+      );
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const setCurrentView = (view: AppView) => {
+    if (view === currentView) return;
+    window.history.pushState({ drozyApp: true, drozyView: view }, '', window.location.href);
+    setCurrentViewState(view);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
