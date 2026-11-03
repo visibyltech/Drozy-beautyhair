@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { OFFICIAL_LOGO_URL, WHATSAPP_CONTACT, WHATSAPP_LINK } from '../data/mockData';
-import { ShoppingBag, Heart, Search, User, Sparkles, MessageCircle, ShieldAlert } from 'lucide-react';
+import { ShoppingBag, Heart, Search, User, Sparkles } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const {
@@ -13,7 +13,6 @@ export const Navbar: React.FC = () => {
     searchQuery,
     setSearchQuery,
     user,
-    switchUserRole,
     notifications,
   } = useApp();
 
@@ -23,27 +22,10 @@ export const Navbar: React.FC = () => {
   return (
     <header className="sticky top-0 z-40 w-full bg-[#0B0B0C]/95 backdrop-blur-md border-b border-[#2C2933]">
       {/* Top Luxury Announcement Bar */}
-      <div className="bg-gradient-to-r from-[#18171C] via-[#241F23] to-[#18171C] border-b border-[#2C2933]/60 px-4 py-1.5 text-center text-[11px] text-[#FAF7F2] flex items-center justify-between">
-        <div className="hidden sm:flex items-center gap-2 text-[#9E9AA6]">
-          <span className="text-[#D4AF37]">★</span>
-          <span>100% RAW HUMAN HAIR GUARANTEE</span>
-        </div>
-        <div className="mx-auto flex items-center gap-2 font-medium tracking-wide">
-          <span className="text-[#E8A598]">HOME OF LUXURY HAIR</span>
-          <span className="text-[#9E9AA6]">·</span>
-          <span className="text-[#D4AF37]">SAVE TO BUY INSTALLMENTS AVAILABLE</span>
-        </div>
-        <div className="hidden md:flex items-center gap-3 text-[#FAF7F2]">
-          <a
-            href={WHATSAPP_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 transition-colors"
-          >
-            <MessageCircle className="w-3.5 h-3.5" />
-            <span className="font-mono text-[11px]">{WHATSAPP_CONTACT}</span>
-          </a>
-        </div>
+      <div className="bg-gradient-to-r from-[#18171C] via-[#241F23] to-[#18171C] border-b border-[#2C2933]/60 px-3 py-1.5 text-center text-[10px] sm:text-[11px] text-[#FAF7F2] tracking-wide">
+        <span className="text-[#E8A598]">HOME OF LUXURY HAIR</span>
+        <span className="mx-2 text-[#9E9AA6]">·</span>
+        <span className="text-[#D4AF37]">FLEXIBLE SAVE TO BUY PLANS</span>
       </div>
 
       {/* Main Navigation Bar - Following Strict Top Bar Contract */}
@@ -105,17 +87,6 @@ export const Navbar: React.FC = () => {
             }`}
           >
             Customer Portal
-          </button>
-          <button
-            onClick={() => setCurrentView('admin_dashboard')}
-            className={`flex items-center gap-1.5 whitespace-nowrap transition-colors py-1 cursor-pointer ${
-              currentView === 'admin_dashboard'
-                ? 'text-[#E8A598] border-b-2 border-[#E8A598]'
-                : 'text-[#9E9AA6] hover:text-[#E8A598]'
-            }`}
-          >
-            <ShieldAlert className="w-3.5 h-3.5 text-[#E8A598]" />
-            <span>Admin Hub</span>
           </button>
         </nav>
 
@@ -203,14 +174,6 @@ export const Navbar: React.FC = () => {
               </div>
             </button>
 
-            {/* Quick Role Switcher for seamless test of customer vs admin */}
-            <button
-              onClick={switchUserRole}
-              title={`Switch to ${user.role === 'customer' ? 'Admin' : 'Customer'} Mode`}
-              className="hidden sm:inline-flex text-[10px] font-medium px-2 py-1 rounded bg-[#2C2933]/70 hover:bg-[#D4AF37]/20 hover:text-[#D4AF37] text-[#9E9AA6] transition-colors cursor-pointer border border-[#2C2933]"
-            >
-              Mode: {user.role === 'customer' ? 'Customer' : 'Admin'}
-            </button>
           </div>
         </div>
       </div>
@@ -248,14 +211,6 @@ export const Navbar: React.FC = () => {
           }`}
         >
           <span>Portal</span>
-        </button>
-        <button
-          onClick={() => setCurrentView('admin_dashboard')}
-          className={`flex flex-col items-center gap-1 ${
-            currentView === 'admin_dashboard' ? 'text-[#E8A598] font-semibold' : 'text-[#9E9AA6]'
-          }`}
-        >
-          <span>Admin</span>
         </button>
       </div>
     </header>

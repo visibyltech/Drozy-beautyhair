@@ -20,8 +20,13 @@ import { ToastContainer } from './components/ToastContainer';
 import { Footer } from './components/Footer';
 
 const MainAppContent: React.FC = () => {
-  const { currentView, selectedProduct, setSelectedProduct } = useApp();
+  const { currentView, selectedProduct, setSelectedProduct, user, setCurrentView } = useApp();
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+
+  // Admin views are never rendered for ordinary customer accounts.
+  React.useEffect(() => {
+    if (currentView === 'admin_dashboard' && user.role !== 'admin') setCurrentView('home');
+  }, [currentView, user.role, setCurrentView]);
 
   return (
     <div className="min-h-screen bg-[#0B0B0C] text-[#FAF7F2] flex flex-col font-sans selection:bg-[#D4AF37]/30 selection:text-[#FAF7F2]">
@@ -34,7 +39,7 @@ const MainAppContent: React.FC = () => {
         {currentView === 'shop' && <ShopPage />}
         {currentView === 'savetobuy_hub' && <SaveToBuyHub />}
         {currentView === 'customer_dashboard' && <CustomerDashboard />}
-        {currentView === 'admin_dashboard' && <AdminDashboard />}
+        {currentView === 'admin_dashboard' && user.role === 'admin' && <AdminDashboard />}
       </main>
 
       {/* Footer */}
