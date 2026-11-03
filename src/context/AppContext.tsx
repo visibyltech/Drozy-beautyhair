@@ -153,41 +153,28 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Navigation State
+  // Navigation state: each in-app screen and product overlay gets one browser entry.
   const [currentView, setCurrentViewState] = useState<AppView>('home');
+  const [selectedProduct, setSelectedProductState] = useState<Product | null>(null);
 
-  // Browser Back restores the previous storefront view instead of leaving the site.
   useEffect(() => {
-    if (!window.history.state?.drozyApp) {
-      window.history.replaceState({ drozyApp: true, drozyView: 'home' }, '', window.location.href);
-    }
-    if (!window.history.state?.drozyRoot) {
-      window.history.pushState(
-        { drozyApp: true, drozyRoot: true, drozyView: 'home' },
-        '',
-        window.location.href
-      );
-    }
+    // Mark the current document entry without adding a duplicate root entry.
+    window.history.replaceState(
+      { drozyApp: true, drozyView: 'home' },
+      '',
+      window.location.href
+    );
 
     const handlePopState = (event: PopStateEvent) => {
       const state = event.state;
-      if (state?.drozyApp && state?.drozyView) {
-        setCurrentViewState(state.drozyView as AppView);
-        if (state.drozyRoot) {
-          window.history.pushState(
-            { drozyApp: true, drozyRoot: true, drozyView: state.drozyView },
-            '',
-            window.location.href
-          );
-        }
-        return;
+      if (state?.drozyApp) {
+        setCurrentViewState((state.drozyView as AppView) || 'home');
+      } else {
+        setCurrentViewState('home');
       }
-      setCurrentViewState('home');
-      window.history.pushState(
-        { drozyApp: true, drozyRoot: true, drozyView: 'home' },
-        '',
-        window.location.href
-      );
+      // A Back action from a product overlay returns to the underlying shop/home.
+      setSelectedProductState(null);
+      window.scrollTo({ top: 0, behavior: 'auto' });
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -196,10 +183,36 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const setCurrentView = (view: AppView) => {
     if (view === currentView) return;
-    window.history.pushState({ drozyApp: true, drozyView: view }, '', window.location.href);
+    window.history.pushState(
+      { drozyApp: true, drozyView: view },
+      '',
+      window.location.href
+    );
     setCurrentViewState(view);
+    setSelectedProductState(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const setSelectedProduct = (product: Product | null) => {
+    if (product) {
+      if (!selectedProduct) {
+        window.history.pushState(
+          { drozyApp: true, drozyView: currentView, drozyOverlay: 'product', productId: product.id },
+          '',
+          window.location.href
+        );
+      }
+      setSelectedProductState(product);
+      return;
+    }
+
+    if (selectedProduct && window.history.state?.drozyOverlay === 'product') {
+      window.history.back();
+    } else {
+      setSelectedProductState(null);
+    }
+  };
+
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -207,7 +220,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
   const [isSaveToBuyModalOpen, setIsSaveToBuyModalOpen] = useState(false);
   const [saveToBuyTargetProduct, setSaveToBuyTargetProduct] = useState<Product | null>(null);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [selectedPlanForDetail, setSelectedPlanForDetail] = useState<SaveToBuyPlan | null>(null);
 
   // Paystack Modal State
