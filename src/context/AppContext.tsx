@@ -16,6 +16,7 @@ import {
   INITIAL_SAVE_TO_BUY_PLANS,
   INITIAL_ORDERS,
   INITIAL_NOTIFICATIONS,
+  repairProductImagePaths,
 } from '../data/mockData';
 import { generatePaystackRef, calculateInstallments } from '../utils/formatters';
 import confetti from 'canvas-confetti';
@@ -217,7 +218,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const saved = localStorage.getItem('drozy_products_v2');
     if (saved) {
       try {
-        return JSON.parse(saved);
+        return repairProductImagePaths(JSON.parse(saved));
       } catch (e) {
         // fallback
       }
