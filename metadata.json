@@ -1,0 +1,6 @@
+{
+  "name": "D’ROZY BEAUTY HAIR",
+  "description": "Home of Luxury Hair — 100% human hair, luxury wigs, hair bundles, accessories, and flexible Save to Buy installment plans.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
