@@ -33,14 +33,14 @@ export const Storefront: React.FC = () => {
       <HeroBanner />
 
       {/* 2. Shop By Category Grid */}
-      <section className="py-16 border-b border-[#2C2933]">
+      <section className="py-6 sm:py-8 border-b border-[#2C2933]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-4 gap-2">
             <div>
-              <span className="text-xs font-semibold text-[#D4AF37] uppercase tracking-wider">
+              <span className="text-[9px] sm:text-[10px] font-semibold text-[#D4AF37] uppercase tracking-wider">
                 Curated Collections
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#FAF7F2] mt-1">
+              <h2 className="font-serif text-lg sm:text-2xl font-bold text-[#FAF7F2] mt-0.5">
                 Shop By Hair Category
               </h2>
             </div>
@@ -56,20 +56,20 @@ export const Storefront: React.FC = () => {
             </button>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
             {CATEGORIES.map((cat) => (
               <div
                 key={cat.name}
                 onClick={() => handleCategoryClick(cat.name)}
-                className="group p-5 rounded-2xl bg-[#141417] border border-[#2C2933] hover:border-[#D4AF37]/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer text-center flex flex-col items-center justify-center space-y-2"
+                className="group p-2 sm:p-3 rounded-xl bg-[#141417] border border-[#2C2933] hover:border-[#D4AF37]/60 transition-all duration-300 cursor-pointer text-center flex flex-col items-center justify-center gap-1"
               >
-                <div className="w-12 h-12 rounded-2xl bg-[#1C1B20] border border-[#2C2933] group-hover:border-[#D4AF37] flex items-center justify-center text-xl transition-all">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#1C1B20] border border-[#2C2933] group-hover:border-[#D4AF37] flex items-center justify-center text-sm sm:text-base transition-all">
                   {cat.icon}
                 </div>
-                <h3 className="font-serif text-sm font-bold text-[#FAF7F2] group-hover:text-[#D4AF37] transition-colors">
+                <h3 className="font-serif text-[10px] sm:text-xs font-bold leading-tight text-[#FAF7F2] group-hover:text-[#D4AF37] transition-colors">
                   {cat.name}
                 </h3>
-                <p className="text-[11px] text-[#9E9AA6] line-clamp-1 font-light">
+                <p className="hidden sm:block text-[9px] text-[#9E9AA6] line-clamp-1 font-light">
                   {cat.desc}
                 </p>
               </div>
