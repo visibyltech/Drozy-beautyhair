@@ -169,8 +169,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
           </div>
 
           {/* Right Column: Contiguous Purchase Module */}
-          <div className="lg:col-span-6 p-6 sm:p-8 flex flex-col justify-between space-y-6">
-            <div className="space-y-5">
+          <div className="lg:col-span-6 p-4 sm:p-8 flex flex-col justify-start space-y-4 sm:space-y-6">
+            <div className="space-y-4 sm:space-y-5">
               {/* Header Info */}
               <div>
                 <div className="flex items-center gap-2 text-xs text-[#9E9AA6] uppercase tracking-wider mb-1">
@@ -191,6 +191,41 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                   <span className="text-xs text-[#9E9AA6]">({product.reviewCount} verified reviews)</span>
                 </div>
               </div>
+
+            {/* Purchase actions appear directly below the product name. */}
+            <div className="space-y-2 pt-0 border-t-0">
+              {/* Save to Buy Primary CTA if eligible */}
+              {product.isSaveToBuyEligible && (
+                <button
+                  type="button"
+                  onClick={handleStartSaveToBuy}
+                  className="w-full py-3 px-4 rounded-xl font-bold text-sm text-[#0B0B0C] bg-gradient-to-r from-[#F5D77F] via-[#D4AF37] to-[#AA8018] hover:opacity-95 transition-all shadow-lg shadow-[#D4AF37]/20 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-[#0B0B0C]" />
+                  <span>Start Save to Buy Installment Plan</span>
+                </button>
+              )}
+
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={handleAddToCart}
+                  className="py-3 px-4 rounded-xl font-semibold text-xs text-[#FAF7F2] bg-[#1F1E24] hover:bg-[#2A2932] border border-[#2C2933] hover:border-[#D4AF37]/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <ShoppingBag className="w-4 h-4 text-[#D4AF37]" />
+                  <span>Add to Bag</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleBuyNow}
+                  className="py-3 px-4 rounded-xl font-semibold text-xs text-[#0B0B0C] bg-[#E8A598] hover:bg-[#F3BEB3] transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
+                >
+                  <span>Pay Now in Full</span>
+                </button>
+              </div>
+
+
 
               {/* Price Row */}
               <div className="p-4 rounded-2xl bg-[#18171C] border border-[#2C2933] flex items-center justify-between">
@@ -316,39 +351,6 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                 {product.description}
               </div>
             </div>
-
-            {/* Action Buttons */}
-            <div className="space-y-3 pt-4 border-t border-[#2C2933]">
-              {/* Save to Buy Primary CTA if eligible */}
-              {product.isSaveToBuyEligible && (
-                <button
-                  type="button"
-                  onClick={handleStartSaveToBuy}
-                  className="w-full py-3.5 px-4 rounded-xl font-bold text-sm text-[#0B0B0C] bg-gradient-to-r from-[#F5D77F] via-[#D4AF37] to-[#AA8018] hover:opacity-95 transition-all shadow-lg shadow-[#D4AF37]/20 flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <Sparkles className="w-4 h-4 text-[#0B0B0C]" />
-                  <span>Start Save to Buy Installment Plan</span>
-                </button>
-              )}
-
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={handleAddToCart}
-                  className="py-3 px-4 rounded-xl font-semibold text-xs text-[#FAF7F2] bg-[#1F1E24] hover:bg-[#2A2932] border border-[#2C2933] hover:border-[#D4AF37]/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <ShoppingBag className="w-4 h-4 text-[#D4AF37]" />
-                  <span>Add to Bag</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleBuyNow}
-                  className="py-3 px-4 rounded-xl font-semibold text-xs text-[#0B0B0C] bg-[#E8A598] hover:bg-[#F3BEB3] transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
-                >
-                  <span>Pay Now in Full</span>
-                </button>
-              </div>
 
               {/* WhatsApp direct chat */}
               <a
