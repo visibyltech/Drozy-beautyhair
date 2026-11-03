@@ -160,11 +160,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!window.history.state?.drozyApp) {
       window.history.replaceState({ drozyApp: true, drozyView: 'home' }, '', window.location.href);
     }
-    window.history.pushState(
-      { drozyApp: true, drozyRoot: true, drozyView: 'home' },
-      '',
-      window.location.href
-    );
+    if (!window.history.state?.drozyRoot) {
+      window.history.pushState(
+        { drozyApp: true, drozyRoot: true, drozyView: 'home' },
+        '',
+        window.location.href
+      );
+    }
 
     const handlePopState = (event: PopStateEvent) => {
       const state = event.state;
