@@ -5,14 +5,20 @@ import { ProductCard } from './ProductCard';
 import { ProductCategory } from '../types';
 import { Sparkles, ArrowRight, ShieldCheck, Heart, Award, Star, MessageCircle } from 'lucide-react';
 import { WHATSAPP_CONTACT, WHATSAPP_LINK } from '../data/mockData';
+import boneStraightImage from '../assets/images/luxury_bone_straight_hair_1793692289793.jpg';
+import mannequinCurlyImage from '../assets/images/mannequin_curly_wig_1793693687407.jpg';
+import mannequinDeepWaveImage from '../assets/images/mannequin_deep_wave_wig_1793693688836.jpg';
+import mannequinBodyWaveImage from '../assets/images/mannequin_body_wave_wig_1793693688371.jpg';
+import bodyWaveLaceImage from '../assets/images/luxury_body_wave_lace_1793692291141.jpg';
+import hairCareElixirImage from '../assets/images/luxury_hair_care_elixir_1793692291109.jpg';
 
-const CATEGORIES: { name: ProductCategory; desc: string; icon: string }[] = [
-  { name: 'Bone Straight', desc: 'Vietnamese Super Double Drawn', icon: '✨' },
-  { name: 'Curly Wigs', desc: 'Hydrated Raw Cambodian Curls', icon: '🌀' },
-  { name: 'Body Wave', desc: 'Lustrous Hollywood S-Waves', icon: '🌊' },
-  { name: 'Lace Frontals', desc: '0.04mm Melted Invisible HD', icon: '💎' },
-  { name: 'Hair Bundles', desc: 'Raw Weft Deals & Closures', icon: '👑' },
-  { name: 'Accessories & Care', desc: 'Aura Rose Elixirs & Brushes', icon: '🌸' },
+const CATEGORIES: { name: ProductCategory; desc: string; image: string; imagePosition?: string }[] = [
+  { name: 'Bone Straight', desc: 'Vietnamese Super Double Drawn', image: boneStraightImage, imagePosition: 'center 42%' },
+  { name: 'Curly Wigs', desc: 'Hydrated Raw Cambodian Curls', image: mannequinCurlyImage, imagePosition: 'center 38%' },
+  { name: 'Body Wave', desc: 'Lustrous Hollywood S-Waves', image: mannequinBodyWaveImage, imagePosition: 'center 40%' },
+  { name: 'Lace Frontals', desc: 'Melted Invisible HD Lace', image: bodyWaveLaceImage, imagePosition: 'center 42%' },
+  { name: 'Hair Bundles', desc: 'Raw Weft Deals & Closures', image: mannequinDeepWaveImage, imagePosition: 'center 42%' },
+  { name: 'Accessories & Care', desc: 'Hair Oils, Serums & Brushes', image: hairCareElixirImage, imagePosition: 'center 48%' },
 ];
 
 export const Storefront: React.FC = () => {
@@ -58,21 +64,32 @@ export const Storefront: React.FC = () => {
 
           <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
             {CATEGORIES.map((cat) => (
-              <div
+              <button
                 key={cat.name}
+                type="button"
                 onClick={() => handleCategoryClick(cat.name)}
-                className="group p-2 sm:p-3 rounded-xl bg-[#141417] border border-[#2C2933] hover:border-[#D4AF37]/60 transition-all duration-300 cursor-pointer text-center flex flex-col items-center justify-center gap-1"
+                aria-label={`Shop ${cat.name}`}
+                className="group relative isolate min-h-[112px] sm:min-h-[136px] overflow-hidden rounded-xl border border-[#2C2933] bg-[#141417] text-left transition-all duration-300 hover:border-[#D4AF37] hover:shadow-[0_0_22px_rgba(212,175,55,0.16)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
               >
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#1C1B20] border border-[#2C2933] group-hover:border-[#D4AF37] flex items-center justify-center text-sm sm:text-base transition-all">
-                  {cat.icon}
-                </div>
-                <h3 className="font-serif text-[10px] sm:text-xs font-bold leading-tight text-[#FAF7F2] group-hover:text-[#D4AF37] transition-colors">
-                  {cat.name}
-                </h3>
-                <p className="hidden sm:block text-[9px] text-[#9E9AA6] line-clamp-1 font-light">
-                  {cat.desc}
-                </p>
-              </div>
+                <img
+                  src={cat.image}
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  className="absolute inset-0 -z-20 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  style={{ objectPosition: cat.imagePosition || 'center' }}
+                />
+                <span className="absolute inset-0 -z-10 bg-gradient-to-t from-black/90 via-black/35 to-black/10" />
+                <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/45 to-transparent" />
+                <span className="absolute inset-x-2 bottom-3 text-center">
+                  <span className="block font-serif text-[11px] sm:text-sm font-bold leading-tight text-white drop-shadow-[0_2px_5px_rgba(0,0,0,0.95)] group-hover:text-[#F3D77B]">
+                    {cat.name}
+                  </span>
+                  <span className="hidden sm:block mt-1 text-[10px] text-white/80 drop-shadow-md">
+                    {cat.desc}
+                  </span>
+                </span>
+              </button>
             ))}
           </div>
         </div>
