@@ -7,6 +7,27 @@ import mannequinBodyWaveImage from '../assets/images/mannequin_body_wave_wig_179
 import bodyWaveLaceImage from '../assets/images/luxury_body_wave_lace_1793692291141.jpg';
 import hairCareElixirImage from '../assets/images/luxury_hair_care_elixir_1793692291109.jpg';
 
+
+const PRODUCT_IMAGE_ASSETS: Record<string, string> = {
+  'luxury_bone_straight_hair_1793692289793.jpg': boneStraightImage,
+  'mannequin_bob_wig_1793693688506.jpg': mannequinBobImage,
+  'mannequin_curly_wig_1793693687407.jpg': mannequinCurlyImage,
+  'mannequin_deep_wave_wig_1793693688836.jpg': mannequinDeepWaveImage,
+  'mannequin_body_wave_wig_1793693688371.jpg': mannequinBodyWaveImage,
+  'luxury_body_wave_lace_1793692291141.jpg': bodyWaveLaceImage,
+  'luxury_hair_care_elixir_1793692291109.jpg': hairCareElixirImage,
+};
+
+// Repair legacy /src/... image URLs already saved in customers' browser storage.
+export const repairProductImagePaths = <T extends { images?: string[] }>(items: T[]): T[] =>
+  items.map((item) => ({
+    ...item,
+    images: item.images?.map((image) => {
+      const filename = image.split('/').pop() || '';
+      return PRODUCT_IMAGE_ASSETS[filename] || image;
+    }),
+  }));
+
 export const OFFICIAL_LOGO_URL = '/assets/aistudio/IMG-20261103-WA0000_78aa170f.jpg';
 export const WHATSAPP_CONTACT = '+234 706 172 8749';
 export const WHATSAPP_LINK = 'https://wa.me/2347061728749?text=Hello%20D’ROZY%20BEAUTY%20HAIR%2C%20I%20am%20interested%20in%20your%20luxury%20hair%20collection';
