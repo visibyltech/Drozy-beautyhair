@@ -71,7 +71,7 @@ export const SaveToBuyModal: React.FC = () => {
   const handleProceedToDeposit = () => {
     openPaystack({
       amount: depositAmount,
-      title: `Save to Buy Initial Deposit (${depositPercent}%) · ${product.name}`,
+      title: `Pay Small Small Initial Deposit (${depositPercent}%) · ${product.name}`,
       subtitle: product.name,
       purpose: 'save_to_buy_deposit',
       customerEmail: user.email,
@@ -114,7 +114,7 @@ export const SaveToBuyModal: React.FC = () => {
         <div className="bg-gradient-to-r from-[#1E1C24] via-[#282129] to-[#1E1C24] p-6 sm:p-8 border-b border-[#2C2933]">
           <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#D4AF37] uppercase mb-1">
             <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-            <span>D’ROZY Save to Buy · 0% Interest Installment Plan</span>
+            <span>D’ROZY Pay Small Small · 0% Interest Installment Plan</span>
           </div>
           <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#FAF7F2]">
             Reserve Your Crown. Save at Your Pace.
@@ -292,7 +292,7 @@ export const SaveToBuyModal: React.FC = () => {
             </div>
           </div>
 
-          {/* Save to Buy Guarantees */}
+          {/* Pay Small Small Guarantees */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-[#9E9AA6]">
             <div className="flex items-start gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
