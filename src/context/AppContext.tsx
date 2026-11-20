@@ -91,7 +91,7 @@ interface AppContextType {
   toggleWishlist: (productId: string) => void;
   isInWishlist: (productId: string) => boolean;
 
-  // Save to Buy
+  // Pay Small Small
   saveToBuyPlans: SaveToBuyPlan[];
   selectedPlanForDetail: SaveToBuyPlan | null;
   setSelectedPlanForDetail: (plan: SaveToBuyPlan | null) => void;
@@ -258,7 +258,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return saved ? JSON.parse(saved) : INITIAL_USER;
   });
 
-  // Save to Buy Plans
+  // Pay Small Small Plans
   const [saveToBuyPlans, setSaveToBuyPlans] = useState<SaveToBuyPlan[]>(() => {
     const saved = localStorage.getItem('drozy_savetobuy');
     return saved ? JSON.parse(saved) : INITIAL_SAVE_TO_BUY_PLANS;
@@ -416,7 +416,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const isInWishlist = (productId: string) => wishlist.includes(productId);
 
-  // Save to Buy System
+  // Pay Small Small System
   const createSaveToBuyPlan = (
     product: Product,
     selectedSpecs: { length: string; density: string; lace: string; color: string },
@@ -521,7 +521,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           type: 'whatsapp',
           recipient: user.phone,
           sentAt: now.toISOString(),
-          message: `Welcome to Save to Buy! Plan #${planNumber} created for ${product.name}. Initial deposit of ₦${depositAmount.toLocaleString()} verified.`,
+          message: `Welcome to Pay Small Small! Plan #${planNumber} created for ${product.name}. Initial deposit of ₦${depositAmount.toLocaleString()} verified.`,
         },
       ],
     };
@@ -532,7 +532,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setNotifications((prev) => [
       {
         id: `notif-${Date.now()}`,
-        title: 'Save to Buy Plan Activated',
+        title: 'Pay Small Small Plan Activated',
         message: `Plan #${planNumber} for ${product.name} is now active. Total: ₦${totalPrice.toLocaleString()}.`,
         timestamp: 'Just now',
         type: 'savetobuy',
@@ -542,7 +542,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     ]);
 
     showToast(
-      'Save to Buy Plan Activated!',
+      'Pay Small Small Plan Activated!',
       `Deposit verified via Paystack. Plan #${planNumber} is now live!`,
       'gold'
     );
@@ -656,7 +656,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             createdAt: new Date().toISOString(),
             estimatedDelivery: new Date(Date.now() + 3 * 86400000).toISOString().split('T')[0],
             trackingNumber: `DRZ-VIP-${Math.floor(100000 + Math.random() * 900000)}`,
-            notes: `Fulfilled via completed Save to Buy plan #${plan.planNumber}. 100% Verified.`,
+            notes: `Fulfilled via completed Pay Small Small plan #${plan.planNumber}. 100% Verified.`,
           };
 
           setOrders((prevOrders) => [fulfillmentOrder, ...prevOrders]);
