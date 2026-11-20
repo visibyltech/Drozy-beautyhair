@@ -69,7 +69,7 @@ export const AdminDashboard: React.FC = () => {
   const completedPlansCount = saveToBuyPlans.filter((p) => p.status === 'completed').length;
   const lowStockProducts = products.filter((p) => p.stockCount <= 8);
 
-  // Filtered Save to Buy plans
+  // Filtered Pay Small Small plans
   const filteredPlans = saveToBuyPlans.filter((plan) => {
     if (stbFilter === 'all') return true;
     return plan.status === stbFilter;
@@ -167,7 +167,7 @@ export const AdminDashboard: React.FC = () => {
               D’ROZY Administrator Portal
             </h1>
             <p className="text-xs text-[#9E9AA6] mt-0.5">
-              Manage luxury inventory, orders, customer Save to Buy escrow, and Paystack transactions.
+              Manage luxury inventory, orders, customer Pay Small Small escrow, and Paystack transactions.
             </p>
           </div>
 
@@ -210,7 +210,7 @@ export const AdminDashboard: React.FC = () => {
             }`}
           >
             <Sparkles className="w-4 h-4" />
-            <span>Save to Buy Plans ({saveToBuyPlans.length})</span>
+            <span>Pay Small Small Plans ({saveToBuyPlans.length})</span>
           </button>
           <button
             onClick={() => setActiveAdminTab('products')}
@@ -278,7 +278,7 @@ export const AdminDashboard: React.FC = () => {
 
               <div className="p-6 rounded-3xl bg-[#141417] border border-[#2C2933] shadow-lg">
                 <span className="text-[11px] text-[#9E9AA6] uppercase font-semibold">
-                  Save to Buy Escrow
+                  Pay Small Small Escrow
                 </span>
                 <div className="text-2xl font-bold font-serif text-[#E8A598] tabular-nums mt-1">
                   {formatNGN(totalSavedInEscrow)}
@@ -390,7 +390,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Tab 2: Save to Buy Management */}
+        {/* Tab 2: Pay Small Small Management */}
         {activeAdminTab === 'savetobuy' && (
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -569,7 +569,7 @@ export const AdminDashboard: React.FC = () => {
                     <th className="py-3.5 px-4">Category</th>
                     <th className="py-3.5 px-4">Base Price</th>
                     <th className="py-3.5 px-4">Stock</th>
-                    <th className="py-3.5 px-4">Save to Buy</th>
+                    <th className="py-3.5 px-4">Pay Small Small</th>
                     <th className="py-3.5 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
@@ -771,7 +771,7 @@ export const AdminDashboard: React.FC = () => {
 
               <div className="p-5 rounded-2xl bg-[#0F0F12] border border-[#2C2933] space-y-3">
                 <span className="text-xs font-semibold text-[#E8A598] uppercase">
-                  Save to Buy Minimum Deposit Policy
+                  Pay Small Small Minimum Deposit Policy
                 </span>
                 <p className="text-xs text-[#9E9AA6]">
                   Current minimum initial deposit required: <strong>20%</strong>
@@ -887,7 +887,7 @@ export const AdminDashboard: React.FC = () => {
                     className="rounded text-[#D4AF37]"
                   />
                   <label htmlFor="saveToBuyCheck" className="text-xs text-[#FAF7F2] cursor-pointer">
-                    Enable Save to Buy Installment Plan for this product
+                    Enable Pay Small Small Installment Plan for this product
                   </label>
                 </div>
 
