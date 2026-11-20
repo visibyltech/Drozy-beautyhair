@@ -12,10 +12,6 @@ import {
 } from '../types';
 import {
   INITIAL_PRODUCTS,
-  INITIAL_USER,
-  INITIAL_SAVE_TO_BUY_PLANS,
-  INITIAL_ORDERS,
-  INITIAL_NOTIFICATIONS,
   repairProductImagePaths,
 } from '../data/mockData';
 import { generatePaystackRef, calculateInstallments } from '../utils/formatters';
@@ -359,19 +355,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Pay Small Small Plans
   const [saveToBuyPlans, setSaveToBuyPlans] = useState<SaveToBuyPlan[]>(() => {
     const saved = localStorage.getItem('drozy_savetobuy');
-    return saved ? JSON.parse(saved) : INITIAL_SAVE_TO_BUY_PLANS;
+    const existing = saved ? JSON.parse(saved) as SaveToBuyPlan[] : [];
+    return existing.filter((plan) => !['stb-plan-001', 'stb-plan-002'].includes(plan.id));
   });
 
   // Orders
   const [orders, setOrders] = useState<Order[]>(() => {
     const saved = localStorage.getItem('drozy_orders');
-    return saved ? JSON.parse(saved) : INITIAL_ORDERS;
+    const existing = saved ? JSON.parse(saved) as Order[] : [];
+    return existing.filter((order) => !['ord-drz-8921', 'ord-drz-9042'].includes(order.id));
   });
 
   // Notifications
   const [notifications, setNotifications] = useState<SystemNotification[]>(() => {
     const saved = localStorage.getItem('drozy_notifications');
-    return saved ? JSON.parse(saved) : INITIAL_NOTIFICATIONS;
+    const existing = saved ? JSON.parse(saved) as SystemNotification[] : [];
+    return existing.filter((notification) => !['notif-1', 'notif-2', 'notif-3'].includes(notification.id));
   });
 
   // Toasts
