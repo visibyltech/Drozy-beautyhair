@@ -42,15 +42,6 @@ export const Footer: React.FC = () => {
 
           <div className="p-4 rounded-2xl bg-[#141417] border border-[#2C2933]/50">
             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider block mb-1">
-              Paystack Verified
-            </span>
-            <p className="text-xs text-[#9E9AA6]">
-              Bank-grade security. Cards, instant bank transfers, and USSD supported.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-[#141417] border border-[#2C2933]/50">
-            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider block mb-1">
               Bank Transfer Checkout
             </span>
             <p className="text-xs text-[#9E9AA6]">
@@ -191,7 +182,7 @@ export const Footer: React.FC = () => {
                 onClick={() => setCurrentView('customer_dashboard')}
                 className="hover:text-[#D4AF37] transition-colors"
               >
-                Client Portal
+                My Account
               </button>
             </li>
             <li>
