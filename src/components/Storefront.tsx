@@ -124,7 +124,7 @@ export const Storefront: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Save to Buy Promotional Spotlight Banner */}
+      {/* 4. Pay Small Small Promotional Spotlight Banner */}
       <section className="py-16 bg-gradient-to-r from-[#18171D] via-[#221C22] to-[#18171D] border-b border-[#2C2933] relative overflow-hidden">
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -133,7 +133,7 @@ export const Storefront: React.FC = () => {
             <div className="lg:col-span-8 space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-xs font-semibold text-[#D4AF37] uppercase tracking-wider">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Flagship Benefit · Save to Buy</span>
+                <span>Flagship Benefit · Pay Small Small</span>
               </div>
               <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#FAF7F2] leading-tight">
                 Don’t Wait for a Full Payday.{' '}
@@ -153,7 +153,7 @@ export const Storefront: React.FC = () => {
                   className="py-3 px-6 rounded-xl font-bold text-xs text-[#0B0B0C] bg-[#D4AF37] hover:bg-[#F3E0A3] transition-colors flex items-center gap-2 cursor-pointer shadow-lg"
                 >
                   <Sparkles className="w-4 h-4 text-[#0B0B0C]" />
-                  <span>Explore Save to Buy Plans</span>
+                  <span>Explore Pay Small Small Plans</span>
                 </button>
                 <a
                   href={WHATSAPP_LINK}
@@ -234,7 +234,7 @@ export const Storefront: React.FC = () => {
                 ))}
               </div>
               <p className="text-xs text-[#FAF7F2] italic leading-relaxed">
-                "The bone straight wig I got is literally like liquid silk. I used the Save to Buy plan
+                "The bone straight wig I got is literally like liquid silk. I used the Pay Small Small plan
                 over 2 months, made bi-weekly payments, and it arrived styled to perfection in Lekki!"
               </p>
               <div className="text-xs font-bold text-[#D4AF37]">Amina Bello, Abuja</div>
