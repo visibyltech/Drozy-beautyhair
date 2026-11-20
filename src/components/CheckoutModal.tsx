@@ -10,7 +10,8 @@ import {
   Lock,
   ArrowRight,
   Sparkles,
-  CreditCard,
+  Copy,
+  Check,
   Building,
 } from 'lucide-react';
 
@@ -54,7 +55,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
   const shippingFee = isFreeShipping ? 0 : 5000;
   const grandTotal = cartTotal + shippingFee;
 
-  const handlePaystackPayment = () => {
+  const handleBankTransfer = () => {
     const addressObj: CustomerAddress = {
       id: `addr-${Date.now()}`,
       title: 'Checkout Delivery Address',
@@ -68,7 +69,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
 
     openPaystack({
       amount: grandTotal,
-      title: 'D’ROZY Online Order Payment',
+      title: 'D’ROZY Online Order Bank Transfer',
       subtitle: `${cart.length} Luxury Hair Items`,
       purpose: 'full_order_payment',
       customerEmail: email,
@@ -177,7 +178,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
 
               <div>
                 <label className="block text-[11px] font-semibold text-[#9E9AA6] uppercase mb-1">
-                  Email Address (Receipt & Paystack verification)
+                  Email Address (Order updates)
                 </label>
                 <input
                   type="email"
@@ -305,16 +306,16 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
             <div className="pt-6 space-y-3">
               <button
                 type="button"
-                onClick={handlePaystackPayment}
+                onClick={handleBankTransfer}
                 className="w-full py-4 px-4 rounded-xl font-bold text-sm text-[#0B0B0C] bg-gradient-to-r from-[#F5D77F] via-[#D4AF37] to-[#AA8018] hover:opacity-95 transition-all shadow-xl shadow-[#D4AF37]/20 flex items-center justify-center gap-2 cursor-pointer"
               >
-                <Lock className="w-4 h-4 text-[#0B0B0C]" />
-                <span>Pay {formatNGN(grandTotal)} with Paystack</span>
+                <Building className="w-4 h-4 text-[#0B0B0C]" />
+                <span>Continue to Bank Transfer · {formatNGN(grandTotal)}</span>
               </button>
 
               <div className="flex items-center justify-center gap-1.5 text-[11px] text-[#9E9AA6]">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Cards, Bank Transfer, USSD · Backend Verified</span>
+                <span>Pay securely to D’ROZY’s Moniepoint business account</span>
               </div>
             </div>
           </div>
