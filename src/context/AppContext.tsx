@@ -261,7 +261,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Wishlist
   const [wishlist, setWishlist] = useState<string[]>(() => {
     const saved = localStorage.getItem('drozy_wishlist');
-    return saved ? JSON.parse(saved) : ['prod-bone-straight-sdd'];
+    return saved ? JSON.parse(saved) : [];
   });
 
   // Signed-out visitors never inherit the demo customer's or admin's local identity.
@@ -356,14 +356,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [saveToBuyPlans, setSaveToBuyPlans] = useState<SaveToBuyPlan[]>(() => {
     const saved = localStorage.getItem('drozy_savetobuy');
     const existing = saved ? JSON.parse(saved) as SaveToBuyPlan[] : [];
-    return existing.filter((plan) => !['stb-plan-001', 'stb-plan-002'].includes(plan.id));
+    return existing.filter((plan) =>
+      !['stb-plan-001', 'stb-plan-002'].includes(plan.id) &&
+      !['STB-2026-0814', 'STB-2026-0792'].includes(plan.planNumber) &&
+      plan.customerId !== 'usr-chidinma-01' &&
+      plan.customerEmail !== 'chidinma.adeyemi@gmail.com'
+    );
   });
 
   // Orders
   const [orders, setOrders] = useState<Order[]>(() => {
     const saved = localStorage.getItem('drozy_orders');
     const existing = saved ? JSON.parse(saved) as Order[] : [];
-    return existing.filter((order) => !['ord-drz-8921', 'ord-drz-9042'].includes(order.id));
+    return existing.filter((order) =>
+      !['ord-drz-8921', 'ord-drz-9042'].includes(order.id) &&
+      order.customerId !== 'usr-chidinma-01' &&
+      order.customerEmail !== 'chidinma.adeyemi@gmail.com'
+    );
   });
 
   // Notifications
