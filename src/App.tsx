@@ -18,15 +18,22 @@ import { CheckoutModal } from './components/CheckoutModal';
 import { PaystackModal } from './components/PaystackModal';
 import { ToastContainer } from './components/ToastContainer';
 import { Footer } from './components/Footer';
+import { AuthModal } from './components/AuthModal';
 
 const MainAppContent: React.FC = () => {
-  const { currentView, selectedProduct, setSelectedProduct, user, setCurrentView } = useApp();
+  const { currentView, selectedProduct, setSelectedProduct, user, setCurrentView, firebaseUser, authLoading, isAdmin, setAuthModalOpen } = useApp();
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
-  // Admin views are never rendered for ordinary customer accounts.
+  // Customer and administrator portals require a verified Firebase session.
   React.useEffect(() => {
-    if (currentView === 'admin_dashboard' && user.role !== 'admin') setCurrentView('home');
-  }, [currentView, user.role, setCurrentView]);
+    if (authLoading) return;
+    if ((currentView === 'admin_dashboard' || currentView === 'customer_dashboard') && !firebaseUser) {
+      setCurrentView('home');
+      setAuthModalOpen(true);
+      return;
+    }
+    if (currentView === 'admin_dashboard' && !isAdmin) setCurrentView('home');
+  }, [currentView, authLoading, firebaseUser, isAdmin, setCurrentView, setAuthModalOpen]);
 
   return (
     <div className="min-h-screen bg-[#0B0B0C] text-[#FAF7F2] flex flex-col font-sans selection:bg-[#D4AF37]/30 selection:text-[#FAF7F2]">
@@ -39,7 +46,7 @@ const MainAppContent: React.FC = () => {
         {currentView === 'shop' && <ShopPage />}
         {currentView === 'savetobuy_hub' && <SaveToBuyHub />}
         {currentView === 'customer_dashboard' && <CustomerDashboard />}
-        {currentView === 'admin_dashboard' && user.role === 'admin' && <AdminDashboard />}
+        {currentView === 'admin_dashboard' && isAdmin && <AdminDashboard />}
       </main>
 
       {/* Footer */}
@@ -67,6 +74,7 @@ const MainAppContent: React.FC = () => {
 
       {/* Floating Notification Toasts */}
       <ToastContainer />
+      <AuthModal />
     </div>
   );
 };
