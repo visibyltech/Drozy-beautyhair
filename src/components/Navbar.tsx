@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useApp } from '../context/AppContext';
 import { OFFICIAL_LOGO_URL } from '../data/mockData';
 import {
@@ -92,8 +93,8 @@ export const Navbar: React.FC = () => {
         <button onClick={() => navigate('savetobuy_hub')} className={`py-1 ${currentView === 'savetobuy_hub' ? 'text-[#D4AF37]' : 'text-[#9E9AA6]'}`}>Pay Small Small</button>
       </div>
 
-      {isMenuOpen && (
-        <div className="fixed inset-0 z-[90]">
+      {isMenuOpen && createPortal(
+        <div className="fixed inset-0 z-[9999]">
           <button type="button" aria-label="Close menu overlay" onClick={() => setIsMenuOpen(false)} className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
           <aside role="dialog" aria-modal="true" aria-label="Website menu" className="absolute right-0 top-0 h-full w-[min(88vw,360px)] overflow-y-auto border-l border-[#D4AF37]/25 bg-[#111114] shadow-2xl">
             <div className="flex items-center justify-between border-b border-[#2C2933] p-5">
@@ -127,7 +128,8 @@ export const Navbar: React.FC = () => {
             </nav>
             <div className="mx-5 border-t border-[#2C2933] py-4 text-[10px] text-[#77717E]">D’ROZY BEAUTY HAIR · HOME OF LUXURY HAIR</div>
           </aside>
-        </div>
+        </div>,
+        document.body
       )}
     </header>
   );
