@@ -65,7 +65,7 @@ export const CustomerDashboard: React.FC = () => {
     const payAmount = amountToPay || plan.installmentAmount;
     openPaystack({
       amount: Math.min(payAmount, plan.outstandingBalance),
-      title: `Save to Buy Contribution - Plan #${plan.planNumber}`,
+      title: `Pay Small Small Contribution - Plan #${plan.planNumber}`,
       subtitle: plan.product.name,
       purpose: 'save_to_buy_installment',
       customerEmail: user.email,
@@ -174,7 +174,7 @@ export const CustomerDashboard: React.FC = () => {
             }`}
           >
             <Sparkles className="w-4 h-4" />
-            <span>Save to Buy Plans ({saveToBuyPlans.length})</span>
+            <span>Pay Small Small Plans ({saveToBuyPlans.length})</span>
           </button>
           <button
             onClick={() => setActiveTab('orders')}
@@ -233,7 +233,7 @@ export const CustomerDashboard: React.FC = () => {
           </button>
         </div>
 
-        {/* Tab 1: Save to Buy Deep Dive */}
+        {/* Tab 1: Pay Small Small Deep Dive */}
         {activeTab === 'savetobuy' && (
           <div className="space-y-6">
             {/* Plan Selector Pills if multiple */}
@@ -551,7 +551,7 @@ export const CustomerDashboard: React.FC = () => {
               <div className="p-12 text-center bg-[#141417] rounded-3xl border border-[#2C2933] space-y-3">
                 <Package className="w-12 h-12 text-[#2C2933] mx-auto" />
                 <h3 className="font-serif text-lg font-bold text-[#FAF7F2]">No Orders Yet</h3>
-                <p className="text-xs text-[#9E9AA6]">Start shopping or activate a Save to Buy plan!</p>
+                <p className="text-xs text-[#9E9AA6]">Start shopping or activate a Pay Small Small plan!</p>
               </div>
             ) : (
               orders.map((order) => {
