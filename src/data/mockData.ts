@@ -411,7 +411,7 @@ export const INITIAL_SAVE_TO_BUY_PLANS: SaveToBuyPlan[] = [
         type: 'whatsapp',
         recipient: '+234 803 456 7890',
         sentAt: '2026-11-10T11:00:00Z',
-        message: 'Hello Chidinma! Your Save to Buy installment for Vietnamese Bone Straight Wig is due in 2 days (₦52,500). Pay online to stay on schedule!',
+        message: 'Hello Chidinma! Your Pay Small Small installment for Vietnamese Bone Straight Wig is due in 2 days (₦52,500). Pay online to stay on schedule!',
       },
       {
         id: 'rem-2',
@@ -505,7 +505,7 @@ export const INITIAL_ORDERS: Order[] = [
     createdAt: '2026-10-02T08:30:00Z',
     estimatedDelivery: '2026-10-05',
     trackingNumber: 'GIG-LOG-9928172',
-    notes: 'Fulfilled upon Save to Buy plan completion. Custom plucked and styled.',
+    notes: 'Fulfilled upon Pay Small Small plan completion. Custom plucked and styled.',
   },
   {
     id: 'ord-drz-9042',
