@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { X, Mail, Lock, User, Phone, Loader2, ShieldCheck } from 'lucide-react';
+import { X, Mail, Lock, User, Phone, Loader2, ShieldCheck, Eye, EyeOff } from 'lucide-react';
 
 export const AuthModal: React.FC = () => {
   const { authModalOpen, setAuthModalOpen, signIn, signUp } = useApp();
@@ -9,6 +9,7 @@ export const AuthModal: React.FC = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
@@ -60,7 +61,7 @@ export const AuthModal: React.FC = () => {
           <label className="block text-xs text-[#C9C5CD]">Email address</label>
           <div className="flex items-center gap-2 rounded-xl border border-[#2C2933] bg-[#0B0B0C] px-3"><Mail className="h-4 w-4 text-[#D4AF37]" /><input required type="email" autoComplete="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com" className="w-full bg-transparent py-3 text-sm text-white outline-none" /></div>
           <label className="block text-xs text-[#C9C5CD]">Password</label>
-          <div className="flex items-center gap-2 rounded-xl border border-[#2C2933] bg-[#0B0B0C] px-3"><Lock className="h-4 w-4 text-[#D4AF37]" /><input required type="password" minLength={6} autoComplete={mode === 'signin' ? 'current-password' : 'new-password'} value={password} onChange={e=>setPassword(e.target.value)} placeholder="At least 6 characters" className="w-full bg-transparent py-3 text-sm text-white outline-none" /></div>
+          <div className="flex items-center gap-2 rounded-xl border border-[#2C2933] bg-[#0B0B0C] px-3"><Lock className="h-4 w-4 shrink-0 text-[#D4AF37]" /><input required type={showPassword ? "text" : "password"} minLength={6} autoComplete={mode === 'signin' ? 'current-password' : 'new-password'} value={password} onChange={e=>setPassword(e.target.value)} placeholder="At least 6 characters" className="w-full min-w-0 bg-transparent py-3 text-sm text-white outline-none" /><button type="button" onClick={() => setShowPassword(value => !value)} aria-label={showPassword ? "Hide password" : "Show password"} aria-pressed={showPassword} className="shrink-0 rounded-md p-2 text-[#D4AF37] hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]">{showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}</button></div>
           {error && <p role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">{error}</p>}
           <button disabled={busy} type="submit" className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#F3D77B] to-[#B88B18] py-3.5 font-bold text-[#111] disabled:opacity-60">
             {busy && <Loader2 className="h-4 w-4 animate-spin" />}
