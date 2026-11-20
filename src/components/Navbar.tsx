@@ -25,7 +25,7 @@ export const Navbar: React.FC = () => {
       <div className="bg-gradient-to-r from-[#18171C] via-[#241F23] to-[#18171C] border-b border-[#2C2933]/60 px-3 py-1 text-center text-[9px] sm:text-[11px] text-[#FAF7F2] tracking-wide">
         <span className="text-[#E8A598]">HOME OF LUXURY HAIR</span>
         <span className="mx-2 text-[#9E9AA6]">·</span>
-        <span className="text-[#D4AF37]">FLEXIBLE SAVE TO BUY PLANS</span>
+        <span className="text-[#D4AF37]">FLEXIBLE Pay Small Small PLANS</span>
       </div>
 
       {/* Main Navigation Bar - Following Strict Top Bar Contract */}
@@ -76,7 +76,7 @@ export const Navbar: React.FC = () => {
             }`}
           >
             <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-            <span>Save to Buy</span>
+            <span>Pay Small Small</span>
           </button>
           <button
             onClick={() => setCurrentView('customer_dashboard')}
@@ -202,7 +202,7 @@ export const Navbar: React.FC = () => {
             currentView === 'savetobuy_hub' ? 'text-[#D4AF37] font-semibold' : 'text-[#9E9AA6]'
           }`}
         >
-          <span className="text-[#D4AF37]">Save to Buy</span>
+          <span className="text-[#D4AF37]">Pay Small Small</span>
         </button>
         <button
           onClick={() => setCurrentView('customer_dashboard')}
