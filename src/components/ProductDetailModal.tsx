@@ -195,7 +195,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
 
             {/* Purchase actions appear directly below the product name. */}
             <div className="space-y-2 pt-0 border-t-0">
-              {/* Save to Buy Primary CTA if eligible */}
+              {/* Pay Small Small Primary CTA if eligible */}
               {product.isSaveToBuyEligible && (
                 <button
                   type="button"
@@ -203,7 +203,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                   className="w-full py-3 px-4 rounded-xl font-bold text-sm text-[#0B0B0C] bg-gradient-to-r from-[#F5D77F] via-[#D4AF37] to-[#AA8018] hover:opacity-95 transition-all shadow-lg shadow-[#D4AF37]/20 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4 text-[#0B0B0C]" />
-                  <span>Start Save to Buy Installment Plan</span>
+                  <span>Start Pay Small Small Installment Plan</span>
                 </button>
               )}
 
@@ -241,7 +241,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                   <div className="text-right">
                     <span className="text-[11px] text-[#E8A598] font-semibold flex items-center gap-1 justify-end">
                       <Sparkles className="w-3 h-3 text-[#D4AF37]" />
-                      Save to Buy Plan
+                      Pay Small Small Plan
                     </span>
                     <div className="text-sm font-semibold text-[#D4AF37]">
                       from {formatNGN(Math.round(currentPrice * 0.25))} deposit
