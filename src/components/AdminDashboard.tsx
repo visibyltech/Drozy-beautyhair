@@ -35,7 +35,7 @@ export const AdminDashboard: React.FC = () => {
     updateOrderStatus,
     sendPlanReminder,
     user,
-    switchUserRole,
+    signOutUser,
   } = useApp();
 
   const [activeAdminTab, setActiveAdminTab] = useState<
@@ -180,10 +180,10 @@ export const AdminDashboard: React.FC = () => {
               <span>Add New Hair Piece</span>
             </button>
             <button
-              onClick={switchUserRole}
+              onClick={() => void signOutUser()}
               className="py-2.5 px-4 rounded-xl text-xs text-[#9E9AA6] hover:text-[#FAF7F2] bg-[#1F1E24] border border-[#2C2933] transition-colors"
             >
-              Switch to Store View
+              Sign Out
             </button>
           </div>
         </div>
