@@ -20,7 +20,7 @@ import {
 } from '../data/mockData';
 import { generatePaystackRef, calculateInstallments } from '../utils/formatters';
 import confetti from 'canvas-confetti';
-import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, updateProfile, User } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, updateProfile, sendEmailVerification, type User } from 'firebase/auth';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
 
@@ -171,7 +171,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const isAdmin = (firebaseUser?.email || '').toLowerCase() === ADMIN_EMAIL;
+  const isAdmin = (firebaseUser?.email || '').toLowerCase() === ADMIN_EMAIL && firebaseUser.emailVerified;
 
   useEffect(() => {
     // Mark the current document entry without adding a duplicate root entry.
@@ -292,7 +292,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         return;
       }
 
-      const adminAccount = (firebaseAccount.email || '').toLowerCase() === ADMIN_EMAIL;
+      const adminAccount = (firebaseAccount.email || '').toLowerCase() === ADMIN_EMAIL && firebaseAccount.emailVerified;
       try {
         const profileRef = doc(db, 'users', firebaseAccount.uid);
         const profileSnap = await getDoc(profileRef);
@@ -330,20 +330,25 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    await signInWithEmailAndPassword(auth, email.trim(), password);
+    const credential = await signInWithEmailAndPassword(auth, email.trim(), password);
+    if ((credential.user.email || '').toLowerCase() === ADMIN_EMAIL && !credential.user.emailVerified) {
+      throw new Error('Please verify the administrator email using the link sent to your inbox, then sign in again.');
+    }
     setAuthModalOpen(false);
   };
 
   const signUp = async (name: string, email: string, password: string, phone: string) => {
     const credential = await createUserWithEmailAndPassword(auth, email.trim(), password);
     await updateProfile(credential.user, { displayName: name.trim() });
+    await sendEmailVerification(credential.user);
     await setDoc(doc(db, 'users', credential.user.uid), {
       name: name.trim(), email: email.trim(), phone: phone.trim(),
-      role: email.trim().toLowerCase() === ADMIN_EMAIL ? 'admin' : 'customer',
+      role: 'customer',
       joinedDate: new Date().toLocaleDateString('en-NG', { month: 'long', year: 'numeric' }),
       addresses: [], createdAt: serverTimestamp(),
     });
     setAuthModalOpen(false);
+    showToast('Verify your email', 'Check your inbox for the Firebase verification link before signing in.', 'info');
   };
 
   const signOutUser = async () => {
