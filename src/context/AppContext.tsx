@@ -20,6 +20,11 @@ import {
 } from '../data/mockData';
 import { generatePaystackRef, calculateInstallments } from '../utils/formatters';
 import confetti from 'canvas-confetti';
+import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, updateProfile, User } from 'firebase/auth';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { auth, db } from '../lib/firebase';
+
+export const ADMIN_EMAIL = 'roselineadebanke7@gmail.com';
 
 export type AppView =
   | 'home'
@@ -134,9 +139,16 @@ interface AppContextType {
   openPaystack: (config: PaystackModalConfig) => void;
   closePaystack: () => void;
 
-  // User Profile & Role Switcher
+  // Firebase Authentication
   user: UserProfile;
-  switchUserRole: () => void;
+  firebaseUser: User | null;
+  authLoading: boolean;
+  isAdmin: boolean;
+  authModalOpen: boolean;
+  setAuthModalOpen: (open: boolean) => void;
+  signIn: (email: string, password: string) => Promise<void>;
+  signUp: (name: string, email: string, password: string, phone: string) => Promise<void>;
+  signOutUser: () => Promise<void>;
   updateUserProfile: (profile: Partial<UserProfile>) => void;
   addAddress: (address: Omit<CustomerAddress, 'id'>) => void;
   updateAddress: (address: CustomerAddress) => void;
@@ -156,6 +168,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Navigation state: each in-app screen and product overlay gets one browser entry.
   const [currentView, setCurrentViewState] = useState<AppView>('home');
   const [selectedProduct, setSelectedProductState] = useState<Product | null>(null);
+  const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const isAdmin = (firebaseUser?.email || '').toLowerCase() === ADMIN_EMAIL;
 
   useEffect(() => {
     // Mark the current document entry without adding a duplicate root entry.
@@ -252,11 +268,88 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return saved ? JSON.parse(saved) : ['prod-bone-straight-sdd'];
   });
 
-  // User Profile
-  const [user, setUser] = useState<UserProfile>(() => {
-    const saved = localStorage.getItem('drozy_user');
-    return saved ? JSON.parse(saved) : INITIAL_USER;
+  // Signed-out visitors never inherit the demo customer's or admin's local identity.
+  const [user, setUser] = useState<UserProfile>({
+    id: 'guest',
+    name: 'Guest',
+    email: '',
+    phone: '',
+    avatar: '',
+    role: 'customer',
+    joinedDate: '',
+    addresses: [],
   });
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseAccount) => {
+      setFirebaseUser(firebaseAccount);
+      if (!firebaseAccount) {
+        setUser({
+          id: 'guest', name: 'Guest', email: '', phone: '', avatar: '',
+          role: 'customer', joinedDate: '', addresses: [],
+        });
+        setAuthLoading(false);
+        return;
+      }
+
+      const adminAccount = (firebaseAccount.email || '').toLowerCase() === ADMIN_EMAIL;
+      try {
+        const profileRef = doc(db, 'users', firebaseAccount.uid);
+        const profileSnap = await getDoc(profileRef);
+        const stored = profileSnap.exists() ? profileSnap.data() : {};
+        const profile = {
+          id: firebaseAccount.uid,
+          name: stored.name || firebaseAccount.displayName || firebaseAccount.email?.split('@')[0] || 'Customer',
+          email: firebaseAccount.email || '',
+          phone: stored.phone || '',
+          avatar: firebaseAccount.photoURL || '',
+          role: adminAccount ? 'admin' : 'customer',
+          joinedDate: stored.joinedDate || new Date(firebaseAccount.metadata.creationTime || Date.now()).toLocaleDateString('en-NG', { month: 'long', year: 'numeric' }),
+          addresses: stored.addresses || [],
+        } as UserProfile;
+        setUser(profile);
+        await setDoc(profileRef, {
+          name: profile.name, email: profile.email, phone: profile.phone,
+          role: adminAccount ? 'admin' : 'customer',
+          joinedDate: profile.joinedDate,
+          updatedAt: serverTimestamp(),
+        }, { merge: true });
+      } catch (error) {
+        console.error('Unable to load Firebase profile', error);
+        setUser({
+          id: firebaseAccount.uid,
+          name: firebaseAccount.displayName || firebaseAccount.email?.split('@')[0] || 'Customer',
+          email: firebaseAccount.email || '', phone: '', avatar: firebaseAccount.photoURL || '',
+          role: adminAccount ? 'admin' : 'customer', joinedDate: '', addresses: [],
+        });
+      } finally {
+        setAuthLoading(false);
+      }
+    });
+    return unsubscribe;
+  }, []);
+
+  const signIn = async (email: string, password: string) => {
+    await signInWithEmailAndPassword(auth, email.trim(), password);
+    setAuthModalOpen(false);
+  };
+
+  const signUp = async (name: string, email: string, password: string, phone: string) => {
+    const credential = await createUserWithEmailAndPassword(auth, email.trim(), password);
+    await updateProfile(credential.user, { displayName: name.trim() });
+    await setDoc(doc(db, 'users', credential.user.uid), {
+      name: name.trim(), email: email.trim(), phone: phone.trim(),
+      role: email.trim().toLowerCase() === ADMIN_EMAIL ? 'admin' : 'customer',
+      joinedDate: new Date().toLocaleDateString('en-NG', { month: 'long', year: 'numeric' }),
+      addresses: [], createdAt: serverTimestamp(),
+    });
+    setAuthModalOpen(false);
+  };
+
+  const signOutUser = async () => {
+    await signOut(auth);
+    setCurrentView('home');
+  };
 
   // Pay Small Small Plans
   const [saveToBuyPlans, setSaveToBuyPlans] = useState<SaveToBuyPlan[]>(() => {
@@ -292,9 +385,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     localStorage.setItem('drozy_wishlist', JSON.stringify(wishlist));
   }, [wishlist]);
 
-  useEffect(() => {
-    localStorage.setItem('drozy_user', JSON.stringify(user));
-  }, [user]);
+
 
   useEffect(() => {
     localStorage.setItem('drozy_savetobuy', JSON.stringify(saveToBuyPlans));
@@ -817,21 +908,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   // User Profile
-  const switchUserRole = () => {
-    setUser((prev) => {
-      const nextRole = prev.role === 'customer' ? 'admin' : 'customer';
-      showToast(
-        nextRole === 'admin' ? 'Switched to Administrator Mode' : 'Switched to Customer Mode',
-        `Current view: ${nextRole.toUpperCase()}`,
-        'gold'
-      );
-      return {
-        ...prev,
-        role: nextRole,
-      };
-    });
-  };
-
   const updateUserProfile = (profile: Partial<UserProfile>) => {
     setUser((prev) => ({ ...prev, ...profile }));
     showToast('Profile Updated', 'Your profile details have been saved.', 'success');
@@ -913,7 +989,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         openPaystack,
         closePaystack,
         user,
-        switchUserRole,
+        firebaseUser,
+        authLoading,
+        isAdmin,
+        authModalOpen,
+        setAuthModalOpen,
+        signIn,
+        signUp,
+        signOutUser,
         updateUserProfile,
         addAddress,
         updateAddress,
