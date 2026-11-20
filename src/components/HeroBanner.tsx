@@ -29,14 +29,14 @@ export const HeroBanner: React.FC = () => {
             <span className="text-gold-gradient italic block sm:inline sm:ml-2 font-normal">Beauty in Every Strand.</span>
           </h1>
           <p className="text-xs sm:text-sm text-[#D0CBD0] max-w-lg leading-relaxed">
-            Shop premium wigs, bundles and hair essentials. Flexible Save to Buy plans available.
+            Shop premium wigs, bundles and hair essentials. Flexible Pay Small Small plans available.
           </p>
           <div className="flex flex-wrap items-center gap-2 pt-0.5">
             <button onClick={() => setCurrentView('shop')} className="py-2.5 px-4 rounded-lg font-semibold text-xs text-[#0B0B0C] bg-gradient-to-r from-[#F5D77F] via-[#D4AF37] to-[#AA8018] flex items-center gap-2 cursor-pointer">
               Shop Collection <ArrowRight className="w-3.5 h-3.5" />
             </button>
             <button onClick={() => setCurrentView('savetobuy_hub')} className="py-2.5 px-3.5 rounded-lg font-medium text-xs text-[#FAF7F2] bg-[#16161A]/90 border border-[#D4AF37]/50 flex items-center gap-2 cursor-pointer">
-              <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" /> Save to Buy
+              <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" /> Pay Small Small
             </button>
           </div>
         </div>
