@@ -71,7 +71,7 @@ export const SaveToBuyModal: React.FC = () => {
   const handleProceedToDeposit = () => {
     openPaystack({
       amount: depositAmount,
-      title: `Save to Buy Initial Deposit (${depositPercent}%)`,
+      title: `Save to Buy Initial Deposit (${depositPercent}%) · ${product.name}`,
       subtitle: product.name,
       purpose: 'save_to_buy_deposit',
       customerEmail: user.email,
@@ -316,10 +316,10 @@ export const SaveToBuyModal: React.FC = () => {
               className="w-full py-4 px-6 rounded-2xl font-bold text-sm text-[#0B0B0C] bg-gradient-to-r from-[#F5D77F] via-[#D4AF37] to-[#AA8018] hover:opacity-95 transition-all shadow-xl shadow-[#D4AF37]/20 flex items-center justify-center gap-2 cursor-pointer"
             >
               <Lock className="w-4 h-4 text-[#0B0B0C]" />
-              <span>Pay Deposit {formatNGN(depositAmount)} via Paystack & Activate Plan</span>
+              <span>Continue to Moniepoint Transfer · {formatNGN(depositAmount)}</span>
             </button>
             <p className="text-center text-[11px] text-[#9E9AA6] mt-2">
-              Payment will be verified in real time on the Paystack gateway.
+              Transfer to D’ROZY’s Moniepoint account. Your plan activates only after payment is confirmed.
             </p>
           </div>
         </div>
