@@ -339,7 +339,7 @@ export const SaveToBuyHub: React.FC = () => {
           </div>
         </div>
 
-        {/* Save to Buy FAQs */}
+        {/* Pay Small Small FAQs */}
         <div className="border-t border-[#2C2933] pt-12">
           <h3 className="font-serif text-2xl font-bold text-center mb-8">
             Frequently Asked Questions
@@ -382,7 +382,7 @@ export const SaveToBuyHub: React.FC = () => {
                 Are there interest charges or hidden extra fees?
               </h4>
               <p className="text-xs text-[#9E9AA6] leading-relaxed">
-                None whatsoever. Save to Buy is 100% interest-free. You pay the exact same retail price
+                None whatsoever. Pay Small Small is 100% interest-free. You pay the exact same retail price
                 as a customer paying upfront today.
               </p>
             </div>
