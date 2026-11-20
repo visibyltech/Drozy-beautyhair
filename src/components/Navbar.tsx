@@ -13,6 +13,10 @@ export const Navbar: React.FC = () => {
     searchQuery,
     setSearchQuery,
     user,
+    firebaseUser,
+    isAdmin,
+    setAuthModalOpen,
+    signOutUser,
     notifications,
   } = useApp();
 
@@ -79,15 +83,11 @@ export const Navbar: React.FC = () => {
             <span>Pay Small Small</span>
           </button>
           <button
-            onClick={() => setCurrentView('customer_dashboard')}
-            className={`whitespace-nowrap transition-colors hover:text-[#D4AF37] py-1 cursor-pointer ${
-              currentView === 'customer_dashboard'
-                ? 'text-[#D4AF37] border-b-2 border-[#D4AF37]'
-                : 'text-[#FAF7F2]'
-            }`}
-          >
-            Customer Portal
+            onClick={() => firebaseUser ? setCurrentView('customer_dashboard') : setAuthModalOpen(true)}
+            className={`whitespace-nowrap transition-colors hover:text-[#D4AF37] py-1 cursor-pointer ${currentView === 'customer_dashboard' ? 'text-[#D4AF37] border-b-2 border-[#D4AF37]' : 'text-[#FAF7F2]'}`}
+          >Customer Portal
           </button>
+          {isAdmin && <button onClick={() => setCurrentView('admin_dashboard')} className={`whitespace-nowrap transition-colors hover:text-[#D4AF37] py-1 cursor-pointer ${currentView === 'admin_dashboard' ? 'text-[#D4AF37] border-b-2 border-[#D4AF37]' : 'text-[#FAF7F2]'}`}>Admin</button>}
         </nav>
 
         {/* Zone 3: Interactive Affordances & User Controls */}
@@ -131,7 +131,7 @@ export const Navbar: React.FC = () => {
 
           {/* Wishlist Icon */}
           <button
-            onClick={() => setCurrentView('customer_dashboard')}
+            onClick={() => firebaseUser ? setCurrentView('customer_dashboard') : setAuthModalOpen(true)}
             className="relative p-2 text-[#9E9AA6] hover:text-[#E8A598] transition-colors rounded-lg hover:bg-[#1A191E]"
             aria-label="Wishlist"
           >
@@ -160,7 +160,7 @@ export const Navbar: React.FC = () => {
           {/* User Account / Role Badge */}
           <div className="flex items-center gap-2 pl-2 border-l border-[#2C2933]">
             <button
-              onClick={() => setCurrentView('customer_dashboard')}
+              onClick={() => firebaseUser ? setCurrentView('customer_dashboard') : setAuthModalOpen(true)}
               className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-[#1A191E] transition-colors group"
             >
               <div className="w-8 h-8 rounded-full border border-[#D4AF37]/40 flex items-center justify-center bg-[#1F1E24] overflow-hidden">
@@ -168,12 +168,12 @@ export const Navbar: React.FC = () => {
               </div>
               <div className="hidden xl:flex flex-col text-left">
                 <span className="text-xs font-semibold text-[#FAF7F2] leading-tight">
-                  {user.name.split(' ')[0]}
+                  {firebaseUser ? user.name.split(' ')[0] : 'Sign In'}
                 </span>
-                <span className="text-[10px] text-[#9E9AA6] capitalize">{user.role}</span>
+                <span className="text-[10px] text-[#9E9AA6] capitalize">{firebaseUser ? (isAdmin ? 'Administrator' : 'Customer') : 'Account'}</span>
               </div>
             </button>
-
+            {firebaseUser && <button type="button" onClick={() => void signOutUser()} className="hidden sm:block text-[10px] text-[#9E9AA6] hover:text-[#E8A598]">Sign out</button>}
           </div>
         </div>
       </div>
@@ -204,14 +204,8 @@ export const Navbar: React.FC = () => {
         >
           <span className="text-[#D4AF37]">Pay Small Small</span>
         </button>
-        <button
-          onClick={() => setCurrentView('customer_dashboard')}
-          className={`flex flex-col items-center gap-1 ${
-            currentView === 'customer_dashboard' ? 'text-[#D4AF37]' : 'text-[#9E9AA6]'
-          }`}
-        >
-          <span>Portal</span>
-        </button>
+        <button onClick={() => firebaseUser ? setCurrentView('customer_dashboard') : setAuthModalOpen(true)} className={`flex flex-col items-center gap-1 ${currentView === 'customer_dashboard' ? 'text-[#D4AF37]' : 'text-[#9E9AA6]'}`}><span>Portal</span></button>
+        {isAdmin && <button onClick={() => setCurrentView('admin_dashboard')} className="flex flex-col items-center gap-1 text-[#D4AF37]"><span>Admin</span></button>}
       </div>
     </header>
   );
