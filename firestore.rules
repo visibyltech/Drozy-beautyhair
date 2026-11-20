@@ -6,8 +6,7 @@ service cloud.firestore {
     }
     function isAdmin() {
       return signedIn()
-        && request.auth.token.email == 'roselineadebanke7@gmail.com'
-        && request.auth.token.email_verified == true;
+        && request.auth.token.email == 'roselineadebanke7@gmail.com';
     }
     function owns(uid) {
       return signedIn() && request.auth.uid == uid;
@@ -18,7 +17,7 @@ service cloud.firestore {
       allow create: if owns(uid)
         && (request.resource.data.role == 'customer'
           || (request.auth.token.email == 'roselineadebanke7@gmail.com'
-            && request.auth.token.email_verified == true));
+            && request.resource.data.role == 'admin'));
       allow update: if isAdmin()
         || (owns(uid)
           && request.resource.data.role == resource.data.role
