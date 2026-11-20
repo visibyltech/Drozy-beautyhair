@@ -133,9 +133,7 @@ export const CustomerDashboard: React.FC = () => {
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="font-serif text-2xl font-bold text-[#FAF7F2]">{user.name}</h1>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 uppercase">
-                  VIP Client
-                </span>
+
               </div>
               <div className="text-xs text-[#9E9AA6] mt-1 space-x-2">
                 <span>{user.email}</span>
