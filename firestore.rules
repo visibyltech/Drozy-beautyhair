@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email == 'roselineadebanke7@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+    function owns(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    match /users/{uid} {
+      allow read: if owns(uid) || isAdmin();
+      allow create: if owns(uid)
+        && (request.resource.data.role == 'customer'
+          || (request.auth.token.email == 'roselineadebanke7@gmail.com'
+            && request.auth.token.email_verified == true));
+      allow update: if isAdmin()
+        || (owns(uid)
+          && request.resource.data.role == resource.data.role
+          && request.resource.data.email == resource.data.email);
+      allow delete: if isAdmin();
+    }
+
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+    match /orders/{orderId} {
+      allow create: if signedIn() && request.resource.data.customerId == request.auth.uid;
+      allow read: if isAdmin() || (signedIn() && resource.data.customerId == request.auth.uid);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+    match /paySmallSmallPlans/{planId} {
+      allow create: if signedIn() && request.resource.data.customerId == request.auth.uid;
+      allow read: if isAdmin() || (signedIn() && resource.data.customerId == request.auth.uid);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+    match /transactions/{transactionId} {
+      allow create: if isAdmin();
+      allow read: if isAdmin() || (signedIn() && resource.data.customerId == request.auth.uid);
+      allow update, delete: if isAdmin();
+    }
+    match /notifications/{notificationId} {
+      allow read, update: if isAdmin()
+        || (signedIn() && resource.data.customerId == request.auth.uid);
+      allow create, delete: if isAdmin();
+    }
+  }
+}
