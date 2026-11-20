@@ -16,7 +16,7 @@ import {
 } from '../data/mockData';
 import { generatePaystackRef, calculateInstallments } from '../utils/formatters';
 import confetti from 'canvas-confetti';
-import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, updateProfile, sendEmailVerification, reload, type User } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, updateProfile, sendEmailVerification, type User } from 'firebase/auth';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
 
@@ -145,8 +145,6 @@ interface AppContextType {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (name: string, email: string, password: string, phone: string) => Promise<void>;
   signOutUser: () => Promise<void>;
-  resendVerificationEmail: () => Promise<void>;
-  refreshVerificationStatus: () => Promise<void>;
   updateUserProfile: (profile: Partial<UserProfile>) => void;
   addAddress: (address: Omit<CustomerAddress, 'id'>) => void;
   updateAddress: (address: CustomerAddress) => void;
@@ -169,7 +167,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const isAdmin = (firebaseUser?.email || '').toLowerCase() === ADMIN_EMAIL && firebaseUser.emailVerified;
+  const isAdmin = (firebaseUser?.email || '').trim().toLowerCase() === ADMIN_EMAIL;
 
   useEffect(() => {
     // Mark the current document entry without adding a duplicate root entry.
@@ -290,7 +288,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         return;
       }
 
-      const adminAccount = (firebaseAccount.email || '').toLowerCase() === ADMIN_EMAIL && firebaseAccount.emailVerified;
+      const adminAccount = (firebaseAccount.email || '').trim().toLowerCase() === ADMIN_EMAIL;
       try {
         const profileRef = doc(db, 'users', firebaseAccount.uid);
         const profileSnap = await getDoc(profileRef);
@@ -328,53 +326,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const credential = await signInWithEmailAndPassword(auth, email.trim(), password);
-    if ((credential.user.email || '').toLowerCase() === ADMIN_EMAIL && !credential.user.emailVerified) {
-      throw new Error('Please verify the administrator email using the link sent to your inbox, then sign in again.');
-    }
+    await signInWithEmailAndPassword(auth, email.trim(), password);
     setAuthModalOpen(false);
   };
 
   const signUp = async (name: string, email: string, password: string, phone: string) => {
     const credential = await createUserWithEmailAndPassword(auth, email.trim(), password);
     await updateProfile(credential.user, { displayName: name.trim() });
-    await sendEmailVerification(credential.user);
+    const registeringAdmin = email.trim().toLowerCase() === ADMIN_EMAIL;
+    if (!registeringAdmin) await sendEmailVerification(credential.user);
     await setDoc(doc(db, 'users', credential.user.uid), {
       name: name.trim(), email: email.trim(), phone: phone.trim(),
-      role: 'customer',
+      role: registeringAdmin ? 'admin' : 'customer',
       joinedDate: new Date().toLocaleDateString('en-NG', { month: 'long', year: 'numeric' }),
       addresses: [], createdAt: serverTimestamp(),
     });
     setAuthModalOpen(false);
-    showToast('Verify your email', 'Check your inbox for the Firebase verification link before signing in.', 'info');
-  };
-
-  const resendVerificationEmail = async () => {
-    if (!auth.currentUser) throw new Error('Please sign in first.');
-    if (auth.currentUser.emailVerified) return;
-    await sendEmailVerification(auth.currentUser);
-    showToast('Verification email sent', 'Check your inbox and spam folder for the Firebase verification link.', 'info');
-  };
-
-  const refreshVerificationStatus = async () => {
-    const account = auth.currentUser;
-    if (!account) throw new Error('Please sign in again.');
-    await reload(account);
-    await account.getIdToken(true);
-    setFirebaseUser({ ...account } as User);
-    if ((account.email || '').toLowerCase() === ADMIN_EMAIL && account.emailVerified) {
-      const profileRef = doc(db, 'users', account.uid);
-      await setDoc(profileRef, {
-        name: account.displayName || account.email?.split('@')[0] || 'Administrator',
-        email: account.email,
-        role: 'admin',
-        updatedAt: serverTimestamp(),
-      }, { merge: true });
-      setUser(previous => ({ ...previous, id: account.uid, email: account.email || '', name: account.displayName || previous.name, role: 'admin' }));
-      showToast('Administrator verified', 'Your Admin Dashboard is now available in the website menu.', 'success');
-    } else if (!account.emailVerified) {
-      showToast('Verification still pending', 'Open the verification link in your email, then refresh this status.', 'info');
-    }
+    if (!registeringAdmin) showToast('Verify your email', 'Check your inbox for the Firebase verification link before signing in.', 'info');
   };
 
   const signOutUser = async () => {
@@ -1040,8 +1008,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         signIn,
         signUp,
         signOutUser,
-        resendVerificationEmail,
-        refreshVerificationStatus,
         updateUserProfile,
         addAddress,
         updateAddress,
