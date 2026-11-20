@@ -11,7 +11,7 @@ export const Navbar: React.FC = () => {
   const {
     currentView, setCurrentView, cartCount, setIsCartDrawerOpen, wishlist,
     searchQuery, setSearchQuery, user, firebaseUser, isAdmin, setAuthModalOpen,
-    signOutUser,
+    signOutUser, resendVerificationEmail, refreshVerificationStatus,
   } = useApp();
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -107,7 +107,7 @@ export const Navbar: React.FC = () => {
 
             <div className="border-b border-[#2C2933] p-5">
               {firebaseUser ? (
-                <><p className="font-semibold text-[#FAF7F2]">{user.name}</p><p className="mt-1 break-all text-xs text-[#9E9AA6]">{firebaseUser.email}</p><span className="mt-2 inline-flex rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 px-2 py-1 text-[10px] text-[#D4AF37]">{isAdmin ? 'Administrator' : 'Customer account'}</span></>
+                <><p className="font-semibold text-[#FAF7F2]">{user.name}</p><p className="mt-1 break-all text-xs text-[#9E9AA6]">{firebaseUser.email}</p><span className="mt-2 inline-flex rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 px-2 py-1 text-[10px] text-[#D4AF37]">{isAdmin ? 'Administrator' : firebaseUser.email?.toLowerCase() === 'roselineadebanke7@gmail.com' ? 'Admin email · verification required' : 'Customer account'}</span></>
               ) : (
                 <><p className="font-semibold text-[#FAF7F2]">Welcome to D’ROZY</p><p className="mt-1 text-xs text-[#9E9AA6]">Sign in or create an account to manage your orders.</p></>
               )}
@@ -118,6 +118,7 @@ export const Navbar: React.FC = () => {
               <button onClick={() => navigate('shop')} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm text-[#FAF7F2] hover:bg-[#242329]"><LayoutGrid className="h-4 w-4 text-[#D4AF37]" />Shop all products<ChevronRight className="ml-auto h-4 w-4 text-[#77717E]" /></button>
               <button onClick={() => navigate('savetobuy_hub')} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm text-[#FAF7F2] hover:bg-[#242329]"><Sparkles className="h-4 w-4 text-[#D4AF37]" />Pay Small Small<ChevronRight className="ml-auto h-4 w-4 text-[#77717E]" /></button>
               {firebaseUser && <button onClick={() => navigate('customer_dashboard')} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm text-[#FAF7F2] hover:bg-[#242329]"><User className="h-4 w-4 text-[#D4AF37]" />My account & orders<ChevronRight className="ml-auto h-4 w-4 text-[#77717E]" /></button>}
+              {firebaseUser && firebaseUser.email?.toLowerCase() === 'roselineadebanke7@gmail.com' && !firebaseUser.emailVerified && <div className="mx-2 my-3 rounded-xl border border-[#D4AF37]/30 bg-[#D4AF37]/10 p-3"><p className="text-xs font-semibold text-[#F3D77B]">Verify your administrator email</p><p className="mt-1 text-[11px] leading-relaxed text-[#B8B2BE]">Open the Firebase verification link sent to this address. Then refresh your verification status below.</p><button onClick={() => void resendVerificationEmail().catch(error => alert(error.message))} className="mt-3 w-full rounded-lg border border-[#D4AF37]/40 px-3 py-2 text-xs text-[#F3D77B]">Resend verification email</button><button onClick={() => void refreshVerificationStatus().catch(error => alert(error.message))} className="mt-2 w-full rounded-lg bg-[#D4AF37] px-3 py-2 text-xs font-semibold text-black">I've verified — refresh status</button></div>}
               {isAdmin && <button onClick={() => navigate('admin_dashboard')} className="flex w-full items-center gap-3 rounded-xl border border-[#D4AF37]/25 bg-[#D4AF37]/10 px-4 py-3 text-left text-sm font-semibold text-[#F3D77B] hover:bg-[#D4AF37]/20"><ShieldCheck className="h-4 w-4" />Admin dashboard<ChevronRight className="ml-auto h-4 w-4" /></button>}
               {!firebaseUser ? (
                 <button onClick={() => { setIsMenuOpen(false); setAuthModalOpen(true); }} className="mt-3 flex w-full items-center gap-3 rounded-xl bg-gradient-to-r from-[#F3D77B] to-[#B88B18] px-4 py-3 text-left text-sm font-bold text-[#111]"><User className="h-4 w-4" />Sign in / Create account</button>
