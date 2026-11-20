@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { OFFICIAL_LOGO_URL, WHATSAPP_CONTACT, WHATSAPP_LINK } from '../data/mockData';
-import { MessageCircle, ShieldCheck, Heart, Sparkles, Send, CheckCircle2 } from 'lucide-react';
+import { MessageCircle, Sparkles, Send, CheckCircle2 } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const { setCurrentView, setSelectedCategory } = useApp();
@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
     <footer className="bg-[#0B0B0C] border-t border-[#2C2933] text-[#FAF7F2]">
       {/* Upper VIP Hair Guarantee Ribbon */}
       <div className="border-b border-[#2C2933]/60 py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center md:text-left">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
           <div className="p-4 rounded-2xl bg-[#141417] border border-[#2C2933]/50">
             <span className="text-xs font-semibold text-[#D4AF37] uppercase tracking-wider block mb-1">
               100% Human Hair Guarantee
@@ -33,10 +33,10 @@ export const Footer: React.FC = () => {
 
           <div className="p-4 rounded-2xl bg-[#141417] border border-[#2C2933]/50">
             <span className="text-xs font-semibold text-[#E8A598] uppercase tracking-wider block mb-1">
-              Save to Buy Advantage
+              Pay Small Small
             </span>
             <p className="text-xs text-[#9E9AA6]">
-              0% Interest flexible installments. Lock in your hair piece while you save at your pace.
+              Flexible instalment plans that let you spread payments for your selected hair piece.
             </p>
           </div>
 
@@ -50,11 +50,11 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="p-4 rounded-2xl bg-[#141417] border border-[#2C2933]/50">
-            <span className="text-xs font-semibold text-[#D4AF37] uppercase tracking-wider block mb-1">
-              Direct Stylist Hotline
+            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider block mb-1">
+              Bank Transfer Checkout
             </span>
             <p className="text-xs text-[#9E9AA6]">
-              Instant WhatsApp video consultation and hair advice on {WHATSAPP_CONTACT}.
+              Moniepoint business account details are provided during checkout. Transfers are confirmed before orders are marked paid.
             </p>
           </div>
         </div>
@@ -83,7 +83,7 @@ export const Footer: React.FC = () => {
 
           <p className="text-xs text-[#9E9AA6] leading-relaxed max-w-sm font-light">
             Nigeria’s premier house of 100% raw virgin human hair, luxury wigs, Vietnamese bone
-            straight, HD lace frontals, and flexible Save to Buy installment plans.
+            straight, HD lace frontals, and flexible Pay Small Small instalment plans.
           </p>
 
           <div className="pt-2">
@@ -175,7 +175,7 @@ export const Footer: React.FC = () => {
                 className="hover:text-[#D4AF37] transition-colors flex items-center gap-1"
               >
                 <Sparkles className="w-3 h-3 text-[#D4AF37]" />
-                <span>Save to Buy Plans</span>
+                <span>Pay Small Small Plans</span>
               </button>
             </li>
             <li>
@@ -206,7 +206,7 @@ export const Footer: React.FC = () => {
             VIP Hair Club
           </h4>
           <p className="text-xs text-[#9E9AA6]">
-            Receive private invites to new raw donor batches and Save to Buy promotions.
+            Receive private invites to new raw donor batches and Pay Small Small offers.
           </p>
 
           <form onSubmit={handleSubscribe} className="space-y-2">
@@ -246,7 +246,7 @@ export const Footer: React.FC = () => {
           <span>·</span>
           <span className="hover:text-[#FAF7F2] cursor-pointer">Privacy Policy</span>
           <span>·</span>
-          <span className="hover:text-[#FAF7F2] cursor-pointer">Save to Buy Policy</span>
+          <span className="hover:text-[#FAF7F2] cursor-pointer">Pay Small Small Policy</span>
         </div>
       </div>
     </footer>
