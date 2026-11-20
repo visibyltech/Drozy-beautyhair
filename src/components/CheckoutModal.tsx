@@ -10,8 +10,6 @@ import {
   Lock,
   ArrowRight,
   Sparkles,
-  Copy,
-  Check,
   Building,
 } from 'lucide-react';
 
